@@ -513,6 +513,7 @@ public interface DinkPluginConfig extends Config {
         return EnumSet.noneOf(AccountType.class);
     }
 
+    // todo Deprecate/remove
     @ConfigItem(
         keyName = "screenshotFilenameTemplate",
         name = "Screenshot Filename Template",
@@ -811,6 +812,22 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "collectionScreenshotFilenameTemplate",
+        name = "Collection Screenshot Filename Template",
+        description = "Format of the collection log screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %ITEM% to insert the item name<br/>" +
+            "Use %COMPLETED% to insert the number of completed entries<br/>" +
+            "Use %TOTAL_POSSIBLE% to insert the number of possible entries",
+        position = 4,
+        section = collectionSection
+    )
+    default String collectionScreenshotFilenameTemplate() {
+        return "%USERNAME%_collection_%ITEM%";
+    }
+
+    @ConfigItem(
         keyName = "petEnabled",
         name = "Enable pets",
         description = "Enable notifications for obtaining pets",
@@ -843,6 +860,20 @@ public interface DinkPluginConfig extends Config {
     )
     default String petNotifyMessage() {
         return "%USERNAME% %GAME_MESSAGE%";
+    }
+
+    @ConfigItem(
+        keyName = "petScreenshotFilenameTemplate",
+        name = "Pet Screenshot Filename Template",
+        description = "Format of the pet screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %PET% to insert the pet name",
+        position = 13,
+        section = petSection
+    )
+    default String petScreenshotFilenameTemplate() {
+        return "%USERNAME%_pet_%PET%";
     }
 
     @ConfigItem(
@@ -955,6 +986,22 @@ public interface DinkPluginConfig extends Config {
     )
     default String levelNotifyMessage() {
         return "%USERNAME% has levelled %SKILL%";
+    }
+
+    @ConfigItem(
+        keyName = "levelScreenshotFilenameTemplate",
+        name = "Level Screenshot Filename Template",
+        description = "Format of the level up screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %SKILL% to insert the levelled skill(s)<br/>" +
+            "Use %TOTAL_LEVEL% to insert the updated total level<br/>" +
+            "Use %TOTAL_XP% to insert the updated overall experience",
+        position = 29, // todo update position to avoid collisions
+        section = levelSection
+    )
+    default String levelScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -1126,6 +1173,21 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "lootScreenshotFilenameTemplate",
+        name = "Loot Screenshot Filename Template",
+        description = "Format of the loot screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %LOOT% to insert the loot<br/>" +
+            "Use %SOURCE% to show the source of the loot",
+        position = 41,
+        section = lootSection
+    )
+    default String lootScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "deathEnabled",
         name = "Enable Death",
         description = "Enable notifications for when you die",
@@ -1246,6 +1308,21 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "deathScreenshotFilenameTemplate",
+        name = "Death Screenshot Filename Template",
+        description = "Format of the death screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %PKER% to insert the killer<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %VALUELOST% to insert the GE value of the stuff you lost",
+        position = 50, // todo update positions to avoid collision
+        section = deathSection
+    )
+    default String deathScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "slayerEnabled",
         name = "Enable Slayer",
         description = "Enable notifications for when you complete a slayer task",
@@ -1294,6 +1371,22 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "slayerScreenshotFilenameTemplate",
+        name = "Slayer Screenshot Filename Template",
+        description = "Format of the slayer screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %TASK% to insert your task<br/>" +
+            "Use %POINTS% to show how many points you obtained<br/>" +
+            "Use %TASKCOUNT% to show how many tasks you have completed",
+        position = 54,
+        section = slayerSection
+    )
+    default String slayerScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "questEnabled",
         name = "Enable Quest",
         description = "Enable notifications for when you complete a quest",
@@ -1326,6 +1419,17 @@ public interface DinkPluginConfig extends Config {
     )
     default String questNotifyMessage() {
         return "%USERNAME% has completed a quest: %QUEST%";
+    }
+
+    @ConfigItem(
+        keyName = "questScreenshotFilenameTemplate",
+        name = "Quest Screenshot Filename Template",
+        description = "Format of the quest screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %QUEST% to insert the quest that you completed", position = 63, section = questSection)
+    default String questScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -1411,6 +1515,19 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "clueScreenshotFilenameTemplate",
+        name = "Clue Screenshot Filename Template",
+        description = "Format of the screenshot filename for clue scrolls. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %CLUE% to insert the clue type<br/>" +
+            "Use %LOOT% to show the loot obtained<br/>" +
+            "Use %COUNT% to insert how many of those clue types you have completed", position = 77, section = clueSection)
+    default String clueScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "speedrunEnabled",
         name = "Enable speedruns",
         description = "Enable notifications for when you complete a speedrun",
@@ -1470,6 +1587,19 @@ public interface DinkPluginConfig extends Config {
     )
     default String speedrunMessage() {
         return "%USERNAME% has just finished a speedrun of %QUEST% with a time of %TIME% (their PB is %BEST%)";
+    }
+
+    @ConfigItem(
+        keyName = "speedrunScreenshotFilenameTemplate",
+        name = "Speedrun Screenshot Filename Template",
+        description = "Format of the speedrun screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %QUEST% to insert the quest name<br/>" +
+            "Use %TIME% to insert your new time<br/>" +
+            "Use %BEST% to insert your PB", position = 85, section = speedrunSection)
+    default String speedrunScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -1568,6 +1698,19 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "killCountScreenshotFilenameTemplate",
+        name = "Kill Count Screenshot Filename Template"
+        , description = "Format of the kill count screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %BOSS% to insert the NPC name<br/>" +
+            "Use %COUNT% to insert the kill count<br/>" +
+            "Use %TIME% to insert the completion time", position = 98, section = killCountSection)
+    default String killCountScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "combatTaskEnabled",
         name = "Enable Combat Tasks",
         description = "Enable notifications for combat achievements",
@@ -1634,6 +1777,24 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "combatTaskScreenshotFilenameTemplate",
+        name = "Combat Task Screenshot Filename Template",
+        description = "Format of the combat task screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %TIER% to insert the task tier<br/>" +
+            "Use %TASK% to insert the task name<br/>" +
+            "Use %POINTS% to insert the task points<br/>" +
+            "Use %TOTAL_POINTS% to insert the total points earned across tasks<br/>" +
+            "Use %COMPLETED% to insert the completed tier",
+        position = 105,
+        section = combatTaskSection
+    )
+    default String combatTaskScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "diaryEnabled",
         name = "Enable Diary",
         description = "Enable notifications for achievement diary completions",
@@ -1683,6 +1844,26 @@ public interface DinkPluginConfig extends Config {
     )
     default String diaryNotifyMessage() {
         return "%USERNAME% has completed the %DIFFICULTY% %AREA% Achievement Diary, for a total of %TOTAL% diaries completed";
+    }
+
+    @ConfigItem(
+        keyName = "diaryScreenshotFilenameTemplate",
+        name = "Diary Screenshot Filename Template",
+        description = "Format of the achievement diary screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %DIFFICULTY% to insert the diary difficulty<br/>" +
+            "Use %AREA% to insert the diary area<br/>" +
+            "Use %TOTAL% to insert the total diaries completed<br/>" +
+            "Use %TASKS_COMPLETE% to insert the tasks completed across all diaries<br/>" +
+            "Use %TASKS_TOTAL% to insert the total tasks possible across all diaries<br/>" +
+            "Use %AREA_TASKS_COMPLETE% to insert the tasks completed within the area<br/>" +
+            "Use %AREA_TASKS_TOTAL% to insert the total tasks possible within the area",
+        position = 114,
+        section = diarySection
+    )
+    default String diaryScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -1756,6 +1937,21 @@ public interface DinkPluginConfig extends Config {
     )
     default String gambleRareNotifyMessage() {
         return "%USERNAME% has received rare loot at gamble count %COUNT%: \n\n%LOOT%";
+    }
+
+    @ConfigItem(
+        keyName = "gambleScreenshotFilenameTemplate",
+        name = "BA Gamble Screenshot Filename Template",
+        description = "Format of the BA gamble screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %COUNT% to insert the gamble count<br/>" +
+            "Use %LOOT% to insert the loot",
+        position = 126,
+        section = gambleSection
+    )
+    default String gambleScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -1840,6 +2036,20 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "pkScreenshotFilenameTemplate",
+        name = "PK Screenshot Filename Template",
+        description = "Format of the PK screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %TARGET% to insert the victim's username",
+        position = 137,
+        section = pkSection
+    )
+    default String pkScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "groupStorageEnabled",
         name = "Enable Transactions",
         description = "Enable notifications upon group storage transactions",
@@ -1907,6 +2117,21 @@ public interface DinkPluginConfig extends Config {
     )
     default String groupStorageNotifyMessage() {
         return "%USERNAME% has deposited:\n%DEPOSITED%\n\n%USERNAME% has withdrawn:\n%WITHDRAWN%";
+    }
+
+    @ConfigItem(
+        keyName = "groupStorageScreenshotFilenameTemplate",
+        name = "Group Storage Screenshot Filename Template",
+        description = "Format of the group storage screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %DEPOSITED% to insert the list of deposited items<br/>" +
+            "Use %WITHDRAWN% to insert the list of withdrawn items",
+        position = 146,
+        section = groupStorageSection
+    )
+    default String groupStorageScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -1985,6 +2210,22 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "grandExchangeScreenshotFilenameTemplate",
+        name = "Grand Exchange Screenshot Filename Template",
+        description = "Format of the Grand Exchange screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %TYPE% to insert the type of transaction (bought or sold)<br/>" +
+            "Use %ITEM% to insert the transacted item<br/>" +
+            "Use %STATUS% to insert the trade status (e.g., Completed, In Progress, Cancelled)",
+        position = 156,
+        section = grandExchangeSection
+    )
+    default String grandExchangeScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "notifyTrades",
         name = "Enable Trades",
         description = "Enable notifications upon completed player trades",
@@ -2030,6 +2271,22 @@ public interface DinkPluginConfig extends Config {
     )
     default String tradeNotifyMessage() {
         return "%USERNAME% traded with %COUNTERPARTY%";
+    }
+
+    @ConfigItem(
+        keyName = "tradeScreenshotFilenameTemplate",
+        name = "Trade Screenshot Filename Template",
+        description = "Format of the trade screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %COUNTERPARTY% to insert the name of the other player<br/>" +
+            "Use %IN_VALUE% to insert the value of the items received from the counterparty<br/>" +
+            "Use %OUT_VALUE% to insert the value of the items given to the counterparty",
+        position = 164,
+        section = tradeSection
+    )
+    default String tradeScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -2097,6 +2354,21 @@ public interface DinkPluginConfig extends Config {
     }
 
     @ConfigItem(
+        keyName = "chatScreenshotFilenameTemplate",
+        name = "Chat Screenshot Filename Template",
+        description = "Format of the chat screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %MESSAGE% to insert the chat message<br/>" +
+            "Use %SENDER% to insert the sender of the message",
+        position = 175,
+        section = chatSection
+    )
+    default String chatScreenshotFilenameTemplate() {
+        return "";
+    }
+
+    @ConfigItem(
         keyName = "notifyExternal",
         name = "Enable External Plugin Notifications",
         description = "Enable notifications upon requests by other plugins",
@@ -2116,6 +2388,21 @@ public interface DinkPluginConfig extends Config {
     )
     default ExternalScreenshotPolicy externalSendImage() {
         return ExternalScreenshotPolicy.REQUESTED;
+    }
+
+    @ConfigItem(
+        keyName = "externalScreenshotFilenameTemplate",
+        name = "External Screenshot Filename Template",
+        description = "Format of the external plugin screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %TYPE% to insert the notification type<br/>" +
+            "Use %CLAN% to insert your clan name",
+        position = 182,
+        section = externalSection
+    )
+    default String externalScreenshotFilenameTemplate() {
+        return "";
     }
 
     @ConfigItem(
@@ -2200,6 +2487,22 @@ public interface DinkPluginConfig extends Config {
     )
     default LeagueTaskDifficulty leaguesTaskMinTier() {
         return LeagueTaskDifficulty.EASY;
+    }
+
+    @ConfigItem(
+        keyName = "leaguesScreenshotFilenameTemplate",
+        name = "Leagues Screenshot Filename Template",
+        description = "Format of the leagues screenshot filename. Discord may use this as the text in mobile notifications. " +
+            "Leave empty for default filename.<br/>" +
+            "Use %USERNAME% to insert your username<br/>" +
+            "Use %TYPE% to insert the notification type<br/>" +
+            "Use %CLAN% to insert your clan name",
+        position = 207,
+        section = leaguesSection,
+        hidden = true
+    )
+    default String leaguesScreenshotFilenameTemplate() {
+        return "";
     }
 
 }

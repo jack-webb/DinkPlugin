@@ -178,9 +178,9 @@ public class DiscordMessageHandler {
         };
 
         Request request = new Request.Builder()
-            .url(url)
-            .post(createBody(mBody, image))
-            .build();
+                .url(url)
+                .post(createBody(mBody, image))
+                .build();
 
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -285,6 +285,13 @@ public class DiscordMessageHandler {
             builder.computedDiscordContent(mBody.getText().evaluate(false));
         }
 
+        // todo move to notif layer
+        if (sendImage) {
+            String screenshotTemplate = getScreenshotFilenameTemplate(mBody.getType());
+            String screenshotFileName = computeScreenshotName(screenshotTemplate, mBody);
+            builder.screenshotFileName(screenshotFileName);
+        }
+
         return builder.build();
     }
 
@@ -327,6 +334,56 @@ public class DiscordMessageHandler {
             requestBody.addFormDataPart("file", screenshotFileName, image);
         }
         return requestBody.build();
+    }
+
+    private String getScreenshotFilenameTemplate(NotificationType type) {
+        switch (type) {
+            case CLUE:
+                return config.clueScreenshotFilenameTemplate();
+            case COLLECTION:
+                return config.collectionScreenshotFilenameTemplate();
+            case DEATH:
+                return config.deathScreenshotFilenameTemplate();
+            case LEVEL:
+                return config.levelScreenshotFilenameTemplate();
+            case LOOT:
+                return config.lootScreenshotFilenameTemplate();
+            case PET:
+                return config.petScreenshotFilenameTemplate();
+            case QUEST:
+                return config.questScreenshotFilenameTemplate();
+            case SLAYER:
+                return config.slayerScreenshotFilenameTemplate();
+            case SPEEDRUN:
+                return config.speedrunScreenshotFilenameTemplate();
+            case KILL_COUNT:
+                return config.killCountScreenshotFilenameTemplate();
+            case COMBAT_ACHIEVEMENT:
+                return config.combatTaskScreenshotFilenameTemplate();
+            case ACHIEVEMENT_DIARY:
+                return config.diaryScreenshotFilenameTemplate();
+            case BARBARIAN_ASSAULT_GAMBLE:
+                return config.gambleScreenshotFilenameTemplate();
+            case PLAYER_KILL:
+                return config.pkScreenshotFilenameTemplate();
+            case GROUP_STORAGE:
+                return config.groupStorageScreenshotFilenameTemplate();
+            case GRAND_EXCHANGE:
+                return config.grandExchangeScreenshotFilenameTemplate();
+            case LEAGUES_AREA:
+            case LEAGUES_MASTERY:
+            case LEAGUES_RELIC:
+            case LEAGUES_TASK:
+                return config.leaguesScreenshotFilenameTemplate();
+            case TRADE:
+                return config.tradeScreenshotFilenameTemplate();
+            case CHAT:
+                return config.chatScreenshotFilenameTemplate();
+            case EXTERNAL_PLUGIN:
+                return config.externalScreenshotFilenameTemplate();
+            default:
+                return config.screenshotFilenameTemplate();
+        }
     }
 
     static String computeScreenshotName(String template, NotificationBody<?> mBody) {

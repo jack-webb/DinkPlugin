@@ -121,4 +121,11 @@ public class NotificationBody<T extends NotificationData> {
     @EqualsAndHashCode.Exclude
     transient Image screenshotOverride;
 
+    /**
+     * The name of the screenshot file to be sent to Discord
+     */
+    @Nullable
+    @EqualsAndHashCode.Exclude // todo
+    transient String screenshotFileName;
+
 }
